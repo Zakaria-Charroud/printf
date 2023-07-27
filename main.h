@@ -1,50 +1,72 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef _MAIN_H_
+#define _MAIN_H_
 
-#include <stdio.h>
+#include <stdarg.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdarg.h>
+#include <string.h>
+#include <stdio.h>
 #include <limits.h>
 
 /**
- * struct convert - defines a structure for symbols and functions
- *
- * @sym: The operator
- * @f: The function associated
+ * struct flags - struct for flags
+ * struct modifiers - struct for modifiers
+ * struct identifiers - struct for identifiers
  */
 
-struct convert
+typedef struct flags
 {
-	char *sym;
-	int (*f)(va_list);
-};
-typedef struct convert conver_t;
+	int plus;
+	int space;
+	int hash;
+} flag_t;
 
+typedef struct modifiers
+{
+	int l;
+	int h;
+	int width;
+} mod_t;
+
+typedef struct identifiers
+{
+	char symbol;
+	int (*func)(va_list, flag_t *, mod_t *);
+} id;
 
 int _printf(const char *format, ...);
-int _putchar(char c);
-int format_reciever(const char *format, conver_t f_list[], va_list arg_list);
-int print_percent(va_list);
-int print_integer(va_list);
-int print_char(va_list);
-int print_string(va_list);
-int print_binary(va_list);
-int print_unsigned_integer(va_list);
-int print_octal(va_list list);
-int print_hex(va_list list);
-int print_HEX(va_list list);
-int print_String(va_list val);
-int print_pointer(va_list val);
-int print_rev(va_list l);
-int print_rot13(va_list list);
 
-int print_number(va_list args);
-unsigned int base_len(unsigned int, int);
-char *rev_string(char *);
-void write_base(char *str);
-char *_memcpy(char *dest, char *src, unsigned int n);
-int print_unsgined_number(unsigned int n);
-int hex_check(int num, char x);
-int print_hex_aux(unsigned long int num);
+int _putchar(char c);
+int _puts(char *str);
+
+int _print_char(va_list, flag_t *, mod_t *);
+int _print_str(va_list, flag_t *, mod_t *);
+int _print_specifier(va_list, flag_t *, mod_t *);
+
+int  _print_dec(va_list, flag_t *, mod_t *);
+
+void print_number(long n);
+int count_digits(long n);
+char *convert(unsigned long num, int base, int lowercase);
+
+int _print_binary(va_list, flag_t *, mod_t *);
+int _print_hexa_upper(va_list, flag_t *, mod_t *);
+int _print_hexa_lower(va_list, flag_t *, mod_t *);
+int _print_octal(va_list, flag_t *, mod_t *);
+int _print_unsigned(va_list, flag_t *, mod_t *);
+int _print_address(va_list, flag_t *, mod_t *);
+int _print_percent(va_list, flag_t *, mod_t *);
+int _print_reverse(va_list, flag_t *, mod_t *);
+int _print_rot13(va_list, flag_t *, mod_t *);
+
+/* Generate function pointer */
+int (*get_func(char c))(va_list, flag_t *, mod_t *);
+
+/* Set flags */
+int get_flags(char elem, flag_t *);
+
+/* Set modifiers */
+int get_modifier(char elem, mod_t *);
+void set_width(int width, mod_t *);
+
 #endif
