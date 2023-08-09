@@ -37,9 +37,3 @@ Handles Custom Functions To Print The Reverse Of A String, rot13 Encoding And Ot
 
 ### write_funcs.c
 Handles Functions For Printing To Stdout
-
-------------
-
-### Authors
-**Karim ASSIHOUT & Ismail LAMAAKAL © ALX - Software Engineering Programme (2023)**
-
